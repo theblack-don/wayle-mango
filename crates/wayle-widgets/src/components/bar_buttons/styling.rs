@@ -1,7 +1,7 @@
 //! CSS variable generation for bar button styling.
 
 use relm4::{ComponentSender, gtk};
-use wayle_config::schemas::styling::{ThemeProvider, ThresholdColors};
+use wayle_config::schemas::styling::ThresholdColors;
 
 use super::component::{BarButton, BarButtonCmd};
 use crate::{
@@ -58,26 +58,25 @@ impl InlineStyling for BarButton {
     }
 
     fn build_css(&self) -> String {
-        let is_wayle = matches!(self.settings.theme_provider.get(), ThemeProvider::Wayle);
         let t = &self.threshold_overrides;
 
         let icon_color =
-            ThresholdColors::resolve_or(&t.icon_color, self.resolve_icon_color(is_wayle));
+            ThresholdColors::resolve_or(&t.icon_color, self.resolve_icon_color());
         let label_color = ThresholdColors::resolve_or(
             &t.label_color,
-            resolve_color(&self.colors.label_color, is_wayle),
+            resolve_color(&self.colors.label_color),
         );
         let icon_bg = ThresholdColors::resolve_or(
             &t.icon_background,
-            resolve_color(&self.colors.icon_background, is_wayle),
+            resolve_color(&self.colors.icon_background),
         );
         let button_bg = ThresholdColors::resolve_or(
             &t.button_background,
-            resolve_color(&self.colors.button_background, is_wayle),
+            resolve_color(&self.colors.button_background),
         );
         let border_color = ThresholdColors::resolve_or(
             &t.border_color,
-            resolve_color(&self.colors.border_color, is_wayle),
+            resolve_color(&self.colors.border_color),
         );
         let border_width = self.settings.border_width.get();
 

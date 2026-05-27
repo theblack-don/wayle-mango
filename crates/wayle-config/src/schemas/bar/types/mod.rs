@@ -217,6 +217,8 @@ pub enum BarModule {
     Hyprsunset,
     /// Keyboard layout indicator.
     KeyboardInput,
+    /// MangoWM workspace switcher.
+    MangoWorkspaces,
     /// Media player controls.
     Media,
     /// Microphone mute status.
@@ -294,6 +296,7 @@ impl BarModule {
             Self::IdleInhibit => "idle-inhibit",
             Self::Hyprsunset => "hyprsunset",
             Self::KeyboardInput => "keyboard-input",
+            Self::MangoWorkspaces => "mango-workspaces",
             Self::Media => "media",
             Self::Microphone => "microphone",
             Self::Network => "network",
@@ -327,6 +330,7 @@ impl BarModule {
             "idle-inhibit" => Self::IdleInhibit,
             "hyprsunset" => Self::Hyprsunset,
             "keyboard-input" => Self::KeyboardInput,
+            "mango-workspaces" => Self::MangoWorkspaces,
             "media" => Self::Media,
             "microphone" => Self::Microphone,
             "network" => Self::Network,
@@ -411,6 +415,7 @@ const BUILTIN_MODULES: &[&str] = &[
     "idle-inhibit",
     "keybind-mode",
     "keyboard-input",
+    "mango-workspaces",
     "media",
     "microphone",
     "netstat",

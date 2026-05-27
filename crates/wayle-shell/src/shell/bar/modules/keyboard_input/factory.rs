@@ -55,6 +55,10 @@ fn build_source(services: &ShellServices) -> Option<Arc<dyn KeyboardLayoutSource
             let niri = require_service("keyboard-input", "niri", services.niri.clone())?;
             Some(Arc::new(NiriKeyboardLayoutSource::new(niri)))
         }
+        Compositor::Mango => {
+            warn!(module = "keyboard-input", compositor = "mango", "unsupported compositor");
+            None
+        }
         Compositor::Unknown(name) => {
             warn!(module = "keyboard-input", compositor = %name, "unsupported compositor");
             None

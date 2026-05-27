@@ -1,10 +1,12 @@
+//! Live CSS provider applied to each `MangoWorkspaces` component instance.
+
 use std::sync::Arc;
 
 use relm4::gtk;
 use wayle_config::ConfigService;
 use wayle_widgets::{prelude::BarSettings, styling::resolve_color};
 
-use super::helpers::workspace_id_css_class;
+use super::helpers::tag_id_css_class;
 
 const REM_BASE: f32 = 16.0;
 const ICON_BASE_REM: f32 = 1.3;
@@ -20,7 +22,7 @@ pub(super) fn apply_styling(
     settings: &BarSettings,
 ) {
     let config = config_service.config();
-    let ws_config = &config.modules.hyprland_workspaces;
+    let ws_config = &config.modules.mango_workspaces;
 
     let active_color = resolve_color(&ws_config.active_color);
     let occupied_color = resolve_color(&ws_config.occupied_color);
@@ -36,17 +38,16 @@ pub(super) fn apply_styling(
 
     let icon_size_px = rem_to_px_rounded(ICON_BASE_REM * icon_scale, bar_scale);
     let label_size_px = rem_to_px_rounded(LABEL_BASE_REM * label_scale, bar_scale);
-    let workspace_padding_px =
-        rem_to_px_rounded(ws_config.workspace_padding.get().value(), bar_scale);
+    let tag_padding_px = rem_to_px_rounded(ws_config.tag_padding.get().value(), bar_scale);
 
     let (margin_vertical_px, margin_horizontal_px) = if is_vertical {
-        (workspace_padding_px, 0)
+        (tag_padding_px, 0)
     } else {
-        (0, workspace_padding_px)
+        (0, tag_padding_px)
     };
 
     let mut css = format!(
-        ".workspaces {{ \
+        ".workspaces.mango {{ \
             --ws-active-color: {active_color}; \
             --ws-occupied-color: {occupied_color}; \
             --ws-empty-color: {empty_color}; \
@@ -60,15 +61,14 @@ pub(super) fn apply_styling(
         }}"
     );
 
-    for (workspace_id, style) in &ws_config.workspace_map.get() {
+    for (key, style) in &ws_config.tag_map.get() {
         let Some(color) = style.color.as_ref() else {
             continue;
         };
-
-        let id_class = workspace_id_css_class(i64::from(*workspace_id));
         let color_css = color.to_css();
+        let selector_class = tag_id_css_class(*key);
         css.push_str(&format!(
-            ".workspaces .workspace.{id_class} {{ --ws-override-color: {color_css}; }}"
+            ".workspaces.mango .workspace.{selector_class} {{ --ws-override-color: {color_css}; }}"
         ));
     }
 

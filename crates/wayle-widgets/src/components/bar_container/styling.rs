@@ -1,7 +1,6 @@
 //! CSS variable generation for bar container styling.
 
 use relm4::{ComponentSender, gtk};
-use wayle_config::schemas::styling::ThemeProvider;
 
 use super::component::{BarContainer, BarContainerCmd};
 use crate::{
@@ -44,10 +43,8 @@ impl InlineStyling for BarContainer {
     }
 
     fn build_css(&self) -> String {
-        let is_wayle = matches!(self.theme_provider.get(), ThemeProvider::Wayle);
-
-        let bg = resolve_color(&self.colors.background, is_wayle);
-        let border_color = resolve_color(&self.colors.border_color, is_wayle);
+        let bg = resolve_color(&self.colors.background);
+        let border_color = resolve_color(&self.colors.border_color);
         let border_width = if self.behavior.show_border.get() {
             self.border_width.get()
         } else {

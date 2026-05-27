@@ -17,7 +17,7 @@ use wayle_systray::SystemTrayService;
 use wayle_wallpaper::WallpaperService;
 use wayle_weather::WeatherService;
 
-use crate::services::{IdleInhibitService, ShellIpcService};
+use crate::services::{IdleInhibitService, MangoService, ShellIpcService};
 
 /// Container for services used by shell components.
 ///
@@ -32,6 +32,7 @@ pub(crate) struct ShellServices {
     pub config: Arc<ConfigService>,
     pub hyprland: Option<Arc<HyprlandService>>,
     pub idle_inhibit: Arc<IdleInhibitService>,
+    pub mango: Option<Arc<MangoService>>,
     pub media: Option<Arc<MediaService>>,
     pub niri: Option<Arc<NiriService>>,
     pub network: Option<Arc<NetworkService>>,

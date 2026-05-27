@@ -9,7 +9,10 @@ use wayle_widgets::prelude::BarSettings;
 
 use super::{
     WindowTitle, WindowTitleInit,
-    sources::{FocusedWindowSource, HyprlandFocusedWindowSource, NiriFocusedWindowSource},
+    sources::{
+        FocusedWindowSource, HyprlandFocusedWindowSource, MangoFocusedWindowSource,
+        NiriFocusedWindowSource,
+    },
 };
 use crate::shell::{
     bar::{
@@ -49,6 +52,10 @@ fn build_source(services: &ShellServices) -> Option<Arc<dyn FocusedWindowSource>
         Compositor::Hyprland => {
             let hyprland = require_service("window-title", "hyprland", services.hyprland.clone())?;
             Some(Arc::new(HyprlandFocusedWindowSource::new(hyprland)))
+        }
+        Compositor::Mango => {
+            let mango = require_service("window-title", "mango", services.mango.clone())?;
+            Some(Arc::new(MangoFocusedWindowSource::new(mango)))
         }
         Compositor::Niri => {
             let niri = require_service("window-title", "niri", services.niri.clone())?;

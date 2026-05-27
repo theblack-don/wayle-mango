@@ -6,7 +6,7 @@ use relm4::{ComponentSender, gtk};
 use tokio::sync::mpsc;
 use wayle_config::{
     SubscribeChanges,
-    schemas::{bar::BorderLocation, styling::ThemeProvider},
+    schemas::bar::BorderLocation,
 };
 use wayle_widgets::styling::{InlineStyling, resolve_color};
 
@@ -89,15 +89,13 @@ impl InlineStyling for Bar {
     fn build_css(&self) -> String {
         let config = self.services.config.config();
         let bar = &config.bar;
-        let styling = &config.styling;
-        let is_wayle = matches!(styling.theme_provider.get(), ThemeProvider::Wayle);
 
-        let bg = resolve_color(&bar.bg, is_wayle);
+        let bg = resolve_color(&bar.bg);
         let bg_opacity = bar.background_opacity.get().value();
         let button_opacity = f64::from(bar.button_opacity.get().value()) / 100.0;
         let button_bg_opacity = bar.button_bg_opacity.get().value();
         let label_weight = bar.button_label_weight.get().css_var();
-        let border_color = resolve_color(&bar.border_color, is_wayle);
+        let border_color = resolve_color(&bar.border_color);
         let border_width = bar.border_width.get();
         let border_location = bar.border_location.get();
 
@@ -120,9 +118,9 @@ impl InlineStyling for Bar {
             rem_to_px_rounded(bar.button_group_module_gap.get().value(), scale);
         let group_padding_px =
             rem_to_px_rounded(bar.button_group_padding.get().value() * 0.25, scale);
-        let group_bg = resolve_color(&bar.button_group_background, is_wayle);
+        let group_bg = resolve_color(&bar.button_group_background);
         let group_opacity = bar.button_group_opacity.get().value();
-        let group_border_color = resolve_color(&bar.button_group_border_color, is_wayle);
+        let group_border_color = resolve_color(&bar.button_group_border_color);
         let group_border_width = bar.button_group_border_width.get();
         let group_border_location = bar.button_group_border_location.get();
 

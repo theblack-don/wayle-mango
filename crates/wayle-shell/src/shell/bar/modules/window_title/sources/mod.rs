@@ -6,11 +6,15 @@
 //! in sibling files.
 
 mod hyprland;
+mod mango;
 mod niri;
 
 use futures::stream::BoxStream;
 
-pub(crate) use self::{hyprland::HyprlandFocusedWindowSource, niri::NiriFocusedWindowSource};
+pub(crate) use self::{
+    hyprland::HyprlandFocusedWindowSource, mango::MangoFocusedWindowSource,
+    niri::NiriFocusedWindowSource,
+};
 
 /// Title and app identifier of a focused window.
 ///

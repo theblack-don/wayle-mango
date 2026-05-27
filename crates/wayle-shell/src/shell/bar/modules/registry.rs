@@ -72,6 +72,16 @@ pub(crate) fn require_hyprland(module: &'static str) -> bool {
     }
 }
 
+pub(crate) fn require_mango(module: &'static str) -> bool {
+    match Compositor::detect() {
+        Compositor::Mango => true,
+        other => {
+            warn!(module, compositor = ?other, "module requires mango, skipping");
+            false
+        }
+    }
+}
+
 pub(crate) fn require_niri(module: &'static str) -> bool {
     match Compositor::detect() {
         Compositor::Niri => true,

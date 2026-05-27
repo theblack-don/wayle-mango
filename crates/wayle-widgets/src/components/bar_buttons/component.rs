@@ -365,12 +365,8 @@ impl BarButton {
         }
     }
 
-    pub(super) fn resolve_icon_color(&self, is_wayle_themed: bool) -> Cow<'static, str> {
-        let color = if is_wayle_themed {
-            self.colors.icon_color.get()
-        } else {
-            self.colors.icon_color.default().clone()
-        };
+    pub(super) fn resolve_icon_color(&self) -> Cow<'static, str> {
+        let color = self.colors.icon_color.get();
 
         if color.is_auto() {
             let token = match self.variant {

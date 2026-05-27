@@ -3,7 +3,7 @@
 use std::sync::Arc;
 
 use relm4::gtk;
-use wayle_config::{ConfigService, schemas::styling::ThemeProvider};
+use wayle_config::ConfigService;
 use wayle_widgets::{prelude::BarSettings, styling::resolve_color};
 
 use super::helpers::{workspace_id_css_class, workspace_name_css_class};
@@ -23,13 +23,12 @@ pub(super) fn apply_styling(
 ) {
     let config = config_service.config();
     let ws_config = &config.modules.niri_workspaces;
-    let is_wayle_theme = matches!(config.styling.theme_provider.get(), ThemeProvider::Wayle);
 
-    let active_color = resolve_color(&ws_config.active_color, is_wayle_theme);
-    let occupied_color = resolve_color(&ws_config.occupied_color, is_wayle_theme);
-    let empty_color = resolve_color(&ws_config.empty_color, is_wayle_theme);
-    let container_bg_color = resolve_color(&ws_config.container_bg_color, is_wayle_theme);
-    let border_color = resolve_color(&ws_config.border_color, is_wayle_theme);
+    let active_color = resolve_color(&ws_config.active_color);
+    let occupied_color = resolve_color(&ws_config.occupied_color);
+    let empty_color = resolve_color(&ws_config.empty_color);
+    let container_bg_color = resolve_color(&ws_config.container_bg_color);
+    let border_color = resolve_color(&ws_config.border_color);
     let border_width = settings.border_width.get();
 
     let bar_scale = config.bar.scale.get().value();

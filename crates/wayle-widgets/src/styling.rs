@@ -38,15 +38,11 @@ pub trait InlineStyling {
     }
 }
 
-/// Resolves a color config property based on theme provider context.
+/// Resolves a color config property to its CSS representation.
 ///
-/// When using Wayle's built-in theme, returns the user-configured color.
-/// When using an external GTK theme, returns the default color to avoid
-/// clashing with the theme's color scheme.
-pub fn resolve_color(prop: &ConfigProperty<ColorValue>, is_wayle_theme: bool) -> Cow<'static, str> {
-    if is_wayle_theme {
-        prop.get().to_css()
-    } else {
-        prop.default().to_css()
-    }
+/// Always returns the user-configured color. Color tokens like `"accent"`,
+/// `"red"`, and `"fg-muted"` are valid regardless of which theme provider
+/// is active, so user overrides should never be discarded.
+pub fn resolve_color(prop: &ConfigProperty<ColorValue>) -> Cow<'static, str> {
+    prop.get().to_css()
 }
